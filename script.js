@@ -12,59 +12,57 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    let HumanChoice = prompt("Choose between rock, paper, and scissors: ")
-    return HumanChoice
+function playRound(humanChoice, computerChoice) {
+    humanChoice = humanChoice.toLowerCase()
+    let status = " "
+
+    if(humanChoice === computerChoice){
+        status = "draw"
+    } else if((humanChoice === "rock" && computerChoice === "paper")||(humanChoice === "paper") && computerChoice === "rock") {
+        status = "paper"
+    } else if((humanChoice === "rock" && computerChoice === "scissors")||(humanChoice === "scissors") && computerChoice === "rock") {
+        status = "rock"
+    } else if((humanChoice === "scissors" && computerChoice === "paper")||(humanChoice === "paper") && computerChoice === "scissors") {
+        status = "scissors"
+    } 
+
+    if(status === "draw") {
+        return console.log("<== It's a tie! ==>")
+    } else if(humanChoice === status) {
+        humanScore += 1
+        scoreWindow.innerHTML = humanScore + ' : ' + computerScore;
+        return(humanScore, computerScore);
+    } else {
+        computerScore += 1
+        return (humanScore, computerScore);
+    }
+    
 }
+
+const chooseRock = document.querySelector('.rock');
+const choosePaper = document.querySelector('.paper');
+const chooseScissors = document.querySelector('.scissors');
+let scoreWindow = document.querySelector('span');
 
 let humanScore = 0;
 let computerScore = 0;
 
-function playgame() {
-    function playRound(humanChoice, computerChoice) {
-        humanChoice = humanChoice.toLowerCase()
-        let status = " "
-    
-        if(humanChoice === computerChoice){
-            status = "draw"
-        } else if((humanChoice === "rock" && computerChoice === "paper")||(humanChoice === "paper") && computerChoice === "rock") {
-            status = "paper"
-        } else if((humanChoice === "rock" && computerChoice === "scissors")||(humanChoice === "scissors") && computerChoice === "rock") {
-            status = "rock"
-        } else if((humanChoice === "scissors" && computerChoice === "paper")||(humanChoice === "paper") && computerChoice === "scissors") {
-            status = "scissors"
-        } 
-    
-        if(status === "draw") {
-            return console.log("<== It's a tie! ==>")
-        } else if(humanChoice === status) {
-            humanScore += 1
-            return console.log("You won! " + humanChoice + " beats " + computerChoice)
-        } else {
-            computerScore += 1
-            return console.log("You lose! " + computerChoice + " beats " + humanChoice)
-        }
-    }
+scoreWindow.innerHTML = humanScore + ' : ' + computerScore;
 
-for (let i = 1; i <= 5 ; i++) {
-    const humanSelection = getHumanChoice()
-    const computerSelection = getComputerChoice()
-    playRound(humanSelection, computerSelection)
-    }
-if (humanScore > computerScore) {
-    return console.log("Congratulations! You won!")
-} else if(humanScore < computerScore) {
-    return console.log("You lose:(")
-} else {
-    return console.log("It's a tie! Well played!")
-}
+chooseRock.addEventListener("click", () => {
+    const humanSelection = "rock";
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection,computerSelection);
+});
 
-}
+choosePaper.addEventListener("click", () => {
+    const humanSelection = "paper";
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection,computerSelection);
+});
 
-let play = "Y"
-
-while (play === "Y") {
-    playgame();
-    play = prompt("Do you want to play again? Y/N")
-    play = play.toUpperCase()
-}
+chooseScissors.addEventListener("click", () => {
+    const humanSelection = "scissors";
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection,computerSelection);
+});
